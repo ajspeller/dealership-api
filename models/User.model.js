@@ -15,10 +15,13 @@ const userSchema = new Schema({
     required: true,
     unique: true
   },
-  cars: {
-    type: [Schema.Types.ObjectId],
-    ref: 'Car'
-  }
+  cars: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Car',
+      default: []
+    }
+  ]
 });
 
 const User = mongoose.model('User', userSchema);
