@@ -11,7 +11,7 @@ module.exports = {
     }
   },
   newUser: async (req, res, next) => {
-    const { firstname, lastname, email, cars } = req.body;
+    const { firstname, lastname, email, cars } = req.value.body;
     const user = new User({
       firstname,
       lastname,
@@ -38,11 +38,10 @@ module.exports = {
   },
   replaceUser: async (req, res, next) => {
     // must contain all fo the fields
-    const { id } = req.params;
-    const newUser = req.body;
+    const { id } = req.value.params;
+    const newUser = req.value.body;
     try {
-      const result = await User.findByIdAndUpdate(id, newUser);
-      console.log(result);
+      await User.findByIdAndUpdate(id, newUser);
       res.status(200).json({
         success: true
       });
@@ -74,7 +73,7 @@ module.exports = {
     }
   },
   getUserCars: async (req, res, next) => {
-    const { id } = req.params;
+    const { id } = req.value.params;
     try {
       const user = await User.findById(id).populate('cars');
       const { cars } = user;
@@ -84,8 +83,8 @@ module.exports = {
     }
   },
   newUserCar: async (req, res, next) => {
-    const { id } = req.params;
-    const { make, model, year } = req.body;
+    const { id } = req.value.params;
+    const { make, model, year } = req.value.body;
     const newCar = new Car({
       make,
       model,

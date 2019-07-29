@@ -2,25 +2,42 @@ const express = require('express');
 
 const userController = require('../controllers/user.controller');
 
-const { validateParam, schemas } = require('../helpers/route-helpers');
+const {
+  validateParam,
+  validateBody,
+  schemas
+} = require('../helpers/route-helpers');
 
 const router = express.Router();
 
 router
   .route('/users')
   .get(userController.index)
-  .post(userController.newUser);
+  .post(validateBody(schemas.userSchema), userController.newUser);
 
 router
   .route('/users/:id')
   .get(validateParam(schemas.idSchema, 'id'), userController.getUser)
-  .put(userController.replaceUser)
-  .patch(userController.updateUser)
+  .put(
+    [validateParam(schemas.idSchema, 'id'), validateBody(schemas.userSchema)],
+    userController.replaceUser
+  )
+  .patch(
+    [
+      validateParam(schemas.idSchema, 'id'),
+      validateBody(schemas.userSchemaOptional)
+    ],
+    userController.updateUser
+  )
   .delete(userController.deleteUser);
 
 router
   .route('/users/:id/cars')
-  .get(userController.getUserCars)
-  .post(userController.newUserCar);
+  .get(validateParam(schemas.idSchema, 'id'), userController.getUserCars)
+  .post(
+    validateParam(schemas.idSchema, 'id'),
+    validateBody(schemas.carSchema),
+    userController.newUserCar
+  );
 
 module.exports = router;
