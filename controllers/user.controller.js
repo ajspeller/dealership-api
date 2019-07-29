@@ -28,7 +28,7 @@ module.exports = {
     }
   },
   getUser: async (req, res, next) => {
-    const { id } = req.params;
+    const { id } = req.value.params;
     try {
       const user = await User.findById(id);
       res.status(200).send(user);
