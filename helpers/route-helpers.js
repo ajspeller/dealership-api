@@ -5,7 +5,7 @@ module.exports = {
     return (req, res, next) => {
       const result = Joi.validate(
         {
-          param: req['params'][name]
+          param: req.params[name]
         },
         schema
       );
@@ -14,11 +14,12 @@ module.exports = {
       }
       if (!req.value) {
         req.value = {};
-        if (!req.value['params']) {
-          req.value['params'] = {};
-        }
       }
-      req.value['params'][name] = result.value.param;
+      if (!req.value.params) {
+        req.value.params = {};
+      }
+
+      req.value.params[name] = result.value.param;
       next();
     };
   },
@@ -34,10 +35,10 @@ module.exports = {
       if (!req.value) {
         req.value = {};
       }
-      if (!req.value['body']) {
-        req.value['body'] = {};
+      if (!req.value.body) {
+        req.value.body = {};
       }
-      req.value['body'] = result.value;
+      req.value.body = result.value;
       next();
     };
   },
@@ -45,7 +46,9 @@ module.exports = {
   schemas: {
     idSchema: Joi.object()
       .keys({
-        param: Joi.string().regex(/^[0-9a-fA-F]{24}$/)
+        param: Joi.string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
       })
       .required(),
     userSchema: Joi.object().keys({
@@ -64,6 +67,14 @@ module.exports = {
       make: Joi.string().required(),
       model: Joi.string().required(),
       year: Joi.number().required()
+    }),
+    newCarSchema: Joi.object().keys({
+      make: Joi.string().required(),
+      model: Joi.string().required(),
+      year: Joi.number().required(),
+      seller: Joi.string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
     })
   }
 };

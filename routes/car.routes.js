@@ -1,17 +1,22 @@
 const express = require('express');
 
 const carController = require('../controllers/car.controller');
+const {
+  validateBody,
+  validateParam,
+  schemas
+} = require('../helpers/route-helpers');
 
 const router = express.Router();
 
 router
   .route('/cars')
   .get(carController.index)
-  .post();
+  .post(validateBody(schemas.newCarSchema), carController.newCar);
 
 router
   .route('/cars/:id')
-  .get()
+  .get(validateParam(schemas.idSchema, 'id'), carController.getCar)
   .delete()
   .patch()
   .put();
