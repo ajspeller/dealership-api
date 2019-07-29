@@ -15,7 +15,8 @@ const carSchema = new Schema({
     required: true
   },
   seller: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 });
 

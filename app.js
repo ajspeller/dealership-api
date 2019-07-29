@@ -3,6 +3,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const express = require('express');
 const logger = require('morgan');
+const helmet = require('helmet');
 
 const userRouter = require('./routes/user.routes');
 const carRouter = require('./routes/car.routes');
@@ -21,6 +22,7 @@ mongoose.connect(
 
 const app = express();
 
+app.use(helmet());
 app.use(express.json());
 app.use(
   express.urlencoded({

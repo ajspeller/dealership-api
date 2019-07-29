@@ -18,9 +18,48 @@ POST http://localhost:3000/api/users HTTP/1.1
 Content-Type: application/json
 
 {
-  "firstname": "alfred",
+  "firstname": "robert",
+  "lastname": "speller",
+  "email": "rs@gmail.com"
+}
+
+###
+
+PUT http://localhost:3000/api/users/5d37d64e47033213800078d7 HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstname": "alfred j.",
   "lastname": "speller",
   "email": "ajs@gmail.com"
 }
 
 ###
+
+PATCH http://localhost:3000/api/users/5d37d64e47033213800078d7 HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstname": "aj"
+}
+
+###
+
+DELETE http://localhost:3000/api/users/5d37d64e47033213800078d7 HTTP/1.1
+Content-Type: application/json
+
+###
+
+GET http://localhost:3000/api/users/5d37d64e47033213800078d7/cars HTTP/1.1
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/api/users/5d37d64e47033213800078d7/cars HTTP/1.1
+Content-Type: application/json
+
+{
+  "make": "Volkwagen",
+  "model": "Jetta",
+  "year": 1997
+}
