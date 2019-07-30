@@ -36,5 +36,57 @@ module.exports = {
     } catch (err) {
       next(err);
     }
+  },
+  deleteCar: async (req, res, next) => {
+    const { id } = req.value.params;
+
+    try {
+      const car = await Car.findById(id);
+      if (!car) {
+        return res.status(404).json({
+          error: 'Car does not exist'
+        });
+      }
+      const sellerId = car.seller;
+      try {
+        const seller = await User.findById(sellerId);
+        try {
+          await car.remove();
+          seller.cars.pull(car);
+          try {
+            await seller.save();
+            res.status(200).json({ success: true });
+          } catch (err) {
+            next(err);
+          }
+        } catch (err) {
+          next(err);
+        }
+      } catch (err) {
+        next(err);
+      }
+    } catch (err) {
+      next(err);
+    }
+  },
+  updateCar: async (req, res, next) => {
+    const { id } = req.value.params;
+    const newCar = req.value.body;
+    try {
+      await Car.findByIdAndUpdate(id, newCar);
+      res.status(200).json({ success: true });
+    } catch (err) {
+      next(err);
+    }
+  },
+  replaceCar: async (req, res, next) => {
+    const { id } = req.value.params;
+    const newCar = req.value.body;
+    try {
+      await Car.findByIdAndUpdate(id, newCar);
+      res.status(200).json({ success: true });
+    } catch (err) {
+      next(err);
+    }
   }
 };

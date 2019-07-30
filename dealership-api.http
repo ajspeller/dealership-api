@@ -79,3 +79,14 @@ Content-Type: application/json
 
 GET http://localhost:3000/api/cars/5d3e6ee4c77f307ce62c59c9 HTTP/1.1
 Content-Type: application/json
+
+###
+
+PUT http://localhost:3000/api/cars/5d3e6ee4c77f307ce62c59c9 HTTP/1.1
+Content-Type: application/json
+
+{
+  "make": "Toyota",
+  "model": "Prius",
+  "year": 2099
+}

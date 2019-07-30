@@ -36,7 +36,7 @@ router
   .get(validateParam(schemas.idSchema, 'id'), userController.getUserCars)
   .post(
     validateParam(schemas.idSchema, 'id'),
-    validateBody(schemas.carSchema),
+    validateBody(schemas.userCarSchema),
     userController.newUserCar
   );
 
